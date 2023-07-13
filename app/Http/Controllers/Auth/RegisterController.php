@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
+use Exception;
 use App\Models\User;
-use App\Notifications\RegisterNotification;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Notifications\RegisterNotification;
 
 class RegisterController extends Controller
 {
@@ -17,15 +19,19 @@ class RegisterController extends Controller
 
     public function postRegister(UserRequest $request)
     {
-        $attributes = $request->validated();
+        try {
+            $user = User::create($request->validated());
 
-        $user = User::create($attributes);
+            $user->notify(new RegisterNotification());
 
-        $user->notify(new RegisterNotification());
+            $this->setResend($user);
 
-        $this->setResend($user);
+            return redirect()->route('verification.sent');
+        } catch (Exception $e) {
+            Log::error($e);
 
-        return redirect()->route('verification.sent');
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     private function setResend($user)

@@ -16,7 +16,7 @@
 </head>
 
 <body style="font-family: Open Sans, sans-serif">
-    <section class="px-6 py-8">
+    <section class="px-6 py-8 pt-4">
         @include('layouts.header')
 
         @yield('content')

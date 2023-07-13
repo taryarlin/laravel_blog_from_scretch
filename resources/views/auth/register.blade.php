@@ -58,7 +58,7 @@
                   Sign Up
                 </button>
 
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('forgot-password.index') }}">
                   Forgot Password?
                 </a>
               </div>

@@ -25,6 +25,12 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        if(is_null($user)) {
+            return redirect()
+                    ->route('get.login')
+                    ->with('unverified', 'Your credentials does not match our records');
+        }
+
         if(!$user->hasVerifiedEmail()) {
             $this->setResend($user);
 

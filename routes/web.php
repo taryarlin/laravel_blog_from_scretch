@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
@@ -16,6 +18,14 @@ Route::middleware('guest')->group(function() {
     # Login
     Route::get('login', [LoginController::class, 'showLogin'])->name('get.login');
     Route::post('login', [LoginController::class, 'postLogin'])->name('post.login');
+
+    # Forgot Password
+    Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password.index');
+    Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('forgot-password.send-email');
+
+    # Reset Password
+    Route::get('reset-password', [ResetPasswordController::class, 'index'])->name('reset-password.index');
+    Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('reset-password.reset');
 });
 
 Route::middleware('auth', 'verified')->group(function() {
