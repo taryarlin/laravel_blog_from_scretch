@@ -5,6 +5,8 @@
 
     <main class="max-w-10xl mx-auto mt-6 lg:mt-20 space-y-6">
 
+        <example-component title="Hello World"></example-component>
+
         @if ($posts->count() > 0)
             @if ($posts->first())
                 @php $post = $posts[0]; @endphp

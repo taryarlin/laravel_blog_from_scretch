@@ -47,6 +47,43 @@
             <div class="space-y-4 lg:text-lg leading-loose">
                 <p>{{ $post->content }}</p>
             </div>
+
+            <div class="bg-white-500 border border-gray-200 p-6 rounded-xl space-x-4 my-4">
+                <form method="POST" action="{{ route('comment.store', $post->slug) }}">
+                    @csrf
+
+                    <header class="flex items-center">
+                        <img src="https://i.pravatar.cc/60?u={{ auth()->id() }}"
+                             alt=""
+                             width="40"
+                             height="40"
+                             class="rounded-full">
+
+                        <h2 class="ml-4">Want to participate?</h2>
+                    </header>
+
+                    <div class="mt-6">
+                        <textarea
+                            name="body"
+                            class="w-full text-sm focus:outline-none focus:ring p-4"
+                            rows="2"
+                            placeholder="Quick, thing of something to say!"
+                            required></textarea>
+
+                        @error('body')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="flex justify-end mt-6 pt-6 border-t border-gray-200">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            @foreach ($post->Comment as $comment)
+                <x-post-comment :comment="$comment" />
+            @endforeach
         </div>
     </article>
 </main>

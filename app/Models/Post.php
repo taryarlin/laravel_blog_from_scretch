@@ -28,6 +28,11 @@ class Post extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function Comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public static function findBySlug($slug)
     {
         return static::query()->where('slug', $slug)->firstOrFail();

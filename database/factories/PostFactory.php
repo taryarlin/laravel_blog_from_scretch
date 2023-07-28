@@ -20,7 +20,7 @@ class PostFactory extends Factory
             'author_id' => $this->faker->numberBetween(1, 5),
             'title' => $title,
             'slug' => Str::slug($title),
-            'content' => $this->faker->text(500),
+            'content' => implode(' ', $this->faker->sentences(4)),
             'profile' => $this->faker->imageUrl(640, 480)
         ];
     }
